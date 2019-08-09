@@ -1,6 +1,6 @@
 {
   "name": "ogtagscrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a service to get open graph meta tags",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
   "dependencies": {
     "atob": "^2.1.2",
     "btoa": "^1.2.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "open-graph-scraper": "^3.6.2"
   }

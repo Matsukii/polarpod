@@ -14,25 +14,32 @@ module.exports = (app, dir, config) => {
             'maxRedirects': 10,
         }
 
-        ogs(options, function (error, results) {
-            // console.log('results:', results);
-            resp = results;
-            console.log(error);
-        });
+        ogs(options, function (error, rst) {
+            
+            resp = {
+                name: rst.data.ogSiteName,
+                title: rst.data.ogTitle,
+                desc: rst.data.ogDescription,
+                type: rst.data.ogType,
+                url: rst.data.ogUrl || rst.requestUrl,
+                img: rst.data.ogImage.url || rst.data.ogImage[0].url || 'none',
+            }
+            
+            return res.send(resp);
+        })
         
-        let eResponse = {
-            title: resp.data.ogSiteName
-        }
-        console.log(eResponse);
         
-        res.send(resp);
-
-
+        
+        
+        
     });
+    // console.log(error);
+    // console.log(resp);
+    // console.log(resp.data);
     
-
+    
     // {"data":{"ogSiteName":"Twitch","twitterSite":"@twitch","ogTitle":"Twitch","ogDescription":"Twitch is the world's leading video platform and community for gamers.","ogUrl":"https://www.twitch.tv/","ogType":"website","ogImage":{"url":"//www-cdn.jtvnw.net/images/twitch_logo3.jpg","width":null,"height":null,"type":null}},"success":true,"requestUrl":"http://twitch.tv"}
-
+    
 
     // var options = {'url': 'http://ogp.me/'};
     // var options = {'url': 'http://twitch.tv/'};

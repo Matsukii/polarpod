@@ -1,0 +1,18 @@
+{
+    "data":{
+        "ogSiteName":"Twitch",
+        "twitterSite":"@twitch",
+        "ogTitle":"Twitch",
+        "ogDescription":"Twitch is the world's leading video platform and community for gamers.",
+        "ogUrl":"https://www.twitch.tv/",
+        "ogType":"website",
+        "ogImage":{
+            "url":"//www-cdn.jtvnw.net/images/twitch_logo3.jpg",
+            "width":null,
+            "height":null,
+            "type":null
+        }
+    },
+    "success":true,
+    "requestUrl":"http://twitch.tv"
+}

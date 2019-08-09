@@ -1,10 +1,12 @@
 var express = require("express");
 const path = require('path');
+const cors = require('cors')
 const conf = require('./src/config');
 
 var app = express();
 var port = process.env.PORT || 3001;
 
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
 //* call router
