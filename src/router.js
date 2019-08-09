@@ -1,3 +1,7 @@
+/**
+ * 
+ * https://og-tagg-getter.herokuapp.com/api?u=<url>
+ */
 module.exports = (app, dir, config) => {
     const ogs = require('open-graph-scraper');
 
@@ -38,18 +42,18 @@ module.exports = (app, dir, config) => {
                     }
                 }
                 else{
-                    img = false
+                    img = ''
                     console.log("no img");
                 }
                 console.log(img);
                 
                 
                 resp = {
-                    name: rst.data.ogSiteName,
-                    title: rst.data.ogTitle,
-                    desc: rst.data.ogDescription,
-                    type: rst.data.ogType,
-                    url: rst.data.ogUrl || rst.requestUrl,
+                    name: rst.data.ogSiteName || '',
+                    title: rst.data.ogTitle || '',
+                    desc: rst.data.ogDescription || '',
+                    type: rst.data.ogType || '',
+                    url: rst.data.ogUrl || rst.requestUrl || '',
                     img: img,
                 }
                 
