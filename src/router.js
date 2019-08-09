@@ -9,7 +9,7 @@ module.exports = (app, dir, config) => {
 
     respc = { name: "", title: "", desc: "", type: "", url: "", img: "", }
     
-    app.get("/api", async(req, res) => {
+    app.get("/apis/ogtags", async(req, res) => {
         url = req.query.u;
         
         let options = {
