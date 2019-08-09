@@ -15,14 +15,25 @@ module.exports = (app, dir, config) => {
         }
 
         ogs(options, function (error, rst) {
-            
+
+            imgU = rst.data.ogImage
+
+            imgU.lenght > 0 ? imgo = imgU : imgo = imgU[0];
+
+            // console.log(imgo);
+
+            imgo != undefined ? imgo = imgo : imgo = 'none'
+
+            /**
+             * @description set a var with the data received
+             */
             resp = {
                 name: rst.data.ogSiteName,
                 title: rst.data.ogTitle,
                 desc: rst.data.ogDescription,
                 type: rst.data.ogType,
                 url: rst.data.ogUrl || rst.requestUrl,
-                img: rst.data.ogImage.url || rst.data.ogImage[0].url || 'none',
+                img: imgo.url || 'none',
             }
             
             return res.send(resp);
