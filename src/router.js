@@ -3,6 +3,7 @@ module.exports = (app, dir, config) => {
 
     let resp;
 
+    respc = { name: "", title: "", desc: "", type: "", url: "", img: "", }
     
     app.get("/api", async(req, res) => {
         url = req.query.u;
@@ -16,27 +17,48 @@ module.exports = (app, dir, config) => {
 
         ogs(options, function (error, rst) {
 
-            imgU = rst.data.ogImage
 
-            imgU.lenght > 0 ? imgo = imgU : imgo = imgU[0];
+            // console.log(rst.data.ogImage);
 
-            // console.log(imgo);
+            let img;
+            if(rst.data != undefined){
 
-            imgo != undefined ? imgo = imgo : imgo = 'none'
-
-            /**
-             * @description set a var with the data received
-             */
-            resp = {
-                name: rst.data.ogSiteName,
-                title: rst.data.ogTitle,
-                desc: rst.data.ogDescription,
-                type: rst.data.ogType,
-                url: rst.data.ogUrl || rst.requestUrl,
-                img: imgo.url || 'none',
+                if(rst.data.ogImage.url != undefined || rst.data.ogImage[0] != undefined){
+                    if(rst.data.ogImage[0] != undefined){
+                        if(rst.data.ogImage[0].url != undefined){
+                            console.log("more than 1 img");
+                            // console.log(rst.data.ogImage[0]);
+                            img = rst.data.ogImage[0].url
+                        }
+                    }
+                    else{
+                        console.log("has img");
+                        img = rst.data.ogImage.url
+                        
+                    }
+                }
+                else{
+                    img = false
+                    console.log("no img");
+                }
+                console.log(img);
+                
+                
+                resp = {
+                    name: rst.data.ogSiteName,
+                    title: rst.data.ogTitle,
+                    desc: rst.data.ogDescription,
+                    type: rst.data.ogType,
+                    url: rst.data.ogUrl || rst.requestUrl,
+                    img: img,
+                }
+                
+                return res.status(200).send(resp);
             }
-            
-            return res.send(resp);
+            else{
+                console.log('not founded');
+                return res.status(404).send(respc)
+            }
         })
         
         
