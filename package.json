@@ -1,0 +1,32 @@
+{
+  "name": "ogtagscrapper",
+  "version": "1.0.0",
+  "description": "a service to get open graph meta tags",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "og",
+    "open",
+    "graph",
+    "og",
+    "meta",
+    "tags",
+    "get",
+    "og",
+    "get",
+    "og",
+    "meta",
+    "tags"
+  ],
+  "author": "Matsukii",
+  "license": "MIT",
+  "dependencies": {
+    "atob": "^2.1.2",
+    "btoa": "^1.2.1",
+    "express": "^4.17.1",
+    "open-graph-scraper": "^3.6.2"
+  }
+}
