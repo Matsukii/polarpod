@@ -4,48 +4,41 @@
  */
 module.exports = (app, dir, config) => {
     const ogs = require('open-graph-scraper');
+    const nanoMeme = require('nano-memoize')
 
-    let resp;
+    let ogt = require('./ogtags')
 
-    respc = { name: "", title: "", desc: "", type: "", url: "", img: "", }
+    
     
     app.get("/apis/ogtags", async(req, res) => {
+
+        respc = { name: "", title: "", desc: "", type: "", url: "", img: "", }
+        let resp;
+        let img;
         url = req.query.u;
         
-        let options = {
+        let ogOps = {
             'url': url,
-            'timeout': 5000,
-            'followAllRedirects': true,
-            'maxRedirects': 10,
+            'timeout': 2000,
+            'followAllRedirects': false,
         }
 
-        ogs(options, function (error, rst) {
 
+        ogs(ogOps, function (err, rst) {
 
-            // console.log(rst.data.ogImage);
-
-            let img;
             if(rst.data != undefined){
 
                 if(rst.data.ogImage.url != undefined || rst.data.ogImage[0] != undefined){
                     if(rst.data.ogImage[0] != undefined){
-                        if(rst.data.ogImage[0].url != undefined){
-                            console.log("more than 1 img");
-                            // console.log(rst.data.ogImage[0]);
-                            img = rst.data.ogImage[0].url
-                        }
+                        rst.data.ogImage[0].url != undefined ? img = rst.data.ogImage[0].url : null
                     }
                     else{
-                        console.log("has img");
                         img = rst.data.ogImage.url
-                        
                     }
                 }
                 else{
                     img = ''
-                    console.log("no img");
                 }
-                console.log(img);
                 
                 
                 resp = {
@@ -56,11 +49,12 @@ module.exports = (app, dir, config) => {
                     url: rst.data.ogUrl || rst.requestUrl || '',
                     img: img,
                 }
+    
+                
                 
                 return res.status(200).send(resp);
             }
             else{
-                console.log('not founded');
                 return res.status(404).send(respc)
             }
         })

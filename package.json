@@ -28,6 +28,7 @@
     "btoa": "^1.2.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "nano-memoize": "^1.1.5",
     "open-graph-scraper": "^3.6.2"
   }
 }
