@@ -3,6 +3,14 @@ const path = require('path');
 const cors = require('cors')
 const conf = require('./src/config');
 
+
+const hasher = require('object-hash');
+
+// 0ac6kh
+// 1abz19
+console.log(hasher.sha1(''));
+
+
 var app = express();
 var port = process.env.PORT || 3001;
 

@@ -11,6 +11,7 @@
 module.exports = (app, dir, config) => {
     const ogs = require('open-graph-scraper');
     const qrc = require('./qrgen');
+    const urlp = require('./urlVideoParser');
 
     /**
      * @description og tag getter api
@@ -33,6 +34,14 @@ module.exports = (app, dir, config) => {
                     else{img = rst.data.ogImage.url}
                 }
                 else{img = ''}
+                
+                // ! aditional treatment to imgs like /path/to/image.png
+                // if(img != ''){
+                //     if(img.startsWith('/')){
+                //         img = `${rst.data.ogUrl}${img}`
+                //     }
+                // }
+
                 resp = {
                     name: rst.data.ogSiteName || '',
                     title: rst.data.ogTitle || '',
@@ -74,6 +83,23 @@ module.exports = (app, dir, config) => {
             )
         }
         else{ return res.status(200).send(qrc(params)) }
+    })
+
+
+
+
+    app.get('/apis/vidurl', function(req, res){
+        params = {
+            url: req.query.u
+        }
+
+        if(params.url == undefined){
+            res.status(400).send('no URL informed');
+        }
+        else{
+            return res.status(200).send(urlp(params))
+        }
+
     })
 
 
