@@ -100,5 +100,8 @@ response:<br>
 [metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)<br>
 
 
+# LICENSE
+* MIT
+
 
 
