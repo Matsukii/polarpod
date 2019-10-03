@@ -8,6 +8,4 @@ module.exports = (params) => {
         return cleaned;
     }
     else{ return undefined }
-
-
 }

@@ -1,6 +1,6 @@
 {
-  "name": "ogtagscrapper",
-  "version": "1.0.1",
+  "name": "opentk-apis",
+  "version": "1.0.3",
   "description": "a service to get open graph meta tags",
   "main": "index.js",
   "scripts": {

@@ -9,7 +9,8 @@ var c = mysql.createConnection({
 
 
 /**
- * 
+ * !DEPRECATED
+ * @deprecated unused module
  * @param {String} key private keys to send use this code
  * @param {Array/object} data data
  */
@@ -28,7 +29,7 @@ module.exports = (key = null, data) => {
                 console.log('The solution is: ', results[0].solution);
                 return results[0].solution
             });
-            c.d
+            
         }
     }
 };
