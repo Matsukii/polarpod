@@ -8,7 +8,7 @@ const hasher = require('object-hash');
 
 // 0ac6kh
 // 1abz19
-console.log(hasher.sha1(''));
+console.log(hasher.sha1('#just@A@Proof/+55_42_9901-2144//'));
 
 
 var app = express();
