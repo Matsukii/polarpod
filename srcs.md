@@ -1,3 +1,12 @@
 # https://www.npmjs.com/package/object-hash
 # https://www.npmjs.com/package/mysql
 # https://www.npmjs.com/package/js-video-url-parser
+# https://www.npmjs.com/package/metafetch
+# https://www.npmjs.com/package/open-graph-scraper
+# https://www.npmjs.com/package/bad-words
+# https://www.npmjs.com/package/qrcode-svg
+# https://www.npmjs.com/package/express
+# https://www.npmjs.com/package/atob
+# https://www.npmjs.com/package/btoa
+# https://www.npmjs.com/package/cors
+# https://www.npmjs.com/package/nano-memoize

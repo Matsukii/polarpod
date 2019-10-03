@@ -1,0 +1,24 @@
+{
+"ogtags" : {
+        "name": "GitHub",
+        "title": "Build software better, together",
+        "desc": "description...",
+        "type": "",
+        "url": "https://github.com",
+        "img": "https://github.githubassets.com/images/modules/open_graph/github-logo.png"
+    },
+
+
+    "videoParser":{
+        "id": "jYCGSuNDy4M",
+        "mediaType": "video",
+        "provider": "youtube"
+    },
+
+
+    "messageFilter":{
+        "msg":"****"
+    }
+
+}
+
