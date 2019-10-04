@@ -1,25 +1,19 @@
 {
-  "name": "opentk-apis",
+  "name": "polarpod",
   "version": "1.0.4",
-  "description": "a service to get open graph meta tags",
+  "description": "A set of useful APIs",
   "main": "index.js",
   "scripts": {
     "test": "nodemon index.js",
     "start": "node index.js"
   },
   "keywords": [
-    "og",
-    "open",
-    "graph",
-    "og",
-    "meta",
-    "tags",
-    "get",
-    "og",
-    "get",
-    "og",
-    "meta",
-    "tags"
+    "qr code api",
+    "open graph api",
+    "og tags api",
+    "video url parser api",
+    "bad word filter api"
+
   ],
   "author": "Matsukii",
   "license": "MIT",

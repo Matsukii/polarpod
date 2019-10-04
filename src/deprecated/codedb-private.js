@@ -1,4 +1,4 @@
-let cfg = require('./config');
+let cfg = require('../config');
 var mysql = require('mysql');
 var c = mysql.createConnection({
     host     : cfg.codestorage.host,
@@ -10,6 +10,7 @@ var c = mysql.createConnection({
 
 /**
  * !DEPRECATED
+ * !IGNORE
  * @deprecated unused module
  * @param {String} key private keys to send use this code
  * @param {Array/object} data data

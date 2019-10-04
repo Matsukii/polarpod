@@ -1,10 +1,16 @@
+/**
+ * @author Matsukii
+ * 
+ * @description random loading message generator
+ */
 module.exports = ()  => {
     let loadingMessages = new loadingMessages();
 
     let resp = {
         allMsgs: loadingMessages.msgs,
-        genNorm: loadingMessages.newm(),
-        genHTML: loadingMessages.newmHTML(),
+        genAll: loadingMessages.newMessageAllTypes(),
+        genNorm: genAll.norm,
+        genHTML: genAll.html,
     }
     
     return resp;
@@ -12,8 +18,6 @@ module.exports = ()  => {
 }
 
 class loadingMessages{
-
-    // not breaking the line...
 
     msgs = [
         'Loading',
@@ -122,8 +126,11 @@ class loadingMessages{
      */
     static newm(){
         // return (new loadingMessages).message;
-        let msg = (new loadingMessages).message
-        msg = msg.replace('/*/', '');
+        let msg = (new loadingMessages).message;
+        while(msg.lastIndexOf('/*/') > -1){
+            msg = msg.replace('/*/', '');
+        }
+        // msg = msg.replace('/*/', '');
         return  `${msg}`;
     }
     /**
@@ -135,5 +142,22 @@ class loadingMessages{
             msg = msg.replace('/*/', '<br>');
         }
         return  `${msg}`;
+    }
+
+    /**
+     * @returns all types of avaliable (plain text, html ready...)
+     */
+    static newMessageAllTypes(){
+        let msg = (new loadingMessages).message;
+        let norm = msg;
+        let html = msg;
+        while(norm.lastIndexOf('/*/') > -1){
+            norm = norm.replace('/*/', '');
+        }
+        while(html.lastIndexOf('/*/') > -1){
+            html = html.replace('/*/', '<br>');
+        }
+
+        return {plain: norm, html: html}
     }
 }
