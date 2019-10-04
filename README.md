@@ -20,7 +20,7 @@ A set of useful apis
 # General usage
 
 ## Og tag getter
-https://open-toolkit-api-tolls.herokuapp.com/apis/ogtags?u=[URL]<br><br>
+https://polarpod.herokuapp.com/apis/ogtags?u=[URL]<br><br>
 
 parameters:<br>
 * u: url<br>
@@ -32,7 +32,7 @@ response:<br>
 
  
 ## SVG QR Code generator
-https://open-toolkit-api-tolls.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]<br><br>
+https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]<br><br>
 parameters:<br>
 * u: data<br>
 * d: dark/light [true/false] (if true generates a lighet qr)<br>
@@ -46,7 +46,7 @@ response:<br>
 
 
 ## Video URL parser
-http://opentk-apis.herokuapp.com/apis/vidurl?u=[URL]<br>
+http://polarpod.herokuapp.com/apis/vidurl?u=[URL]<br>
 params:<br>
 * u: video url
 
@@ -54,7 +54,7 @@ response:<br>
 * json
 
 ## Bad-word message filter
-https://open-toolkit-api-tolls.herokuapp.com/apis/filter?msg=[message_to_filter]<br><br>
+https://polarpod.herokuapp.com/apis/filter?msg=[message_to_filter]<br><br>
 params:<br>
 * msg: message
 
