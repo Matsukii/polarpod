@@ -14,6 +14,14 @@ module.exports = (app, dir) => {
     const resMsgs = require('./responseMessages');
     const conf = require('./config');
 
+
+    /**
+     * @description redirect to project repo
+     */
+    app.get('/', (req, res) =>{
+        res.redirect('https://github.com/Matsukii/polarpod');
+    })
+
     /**
      * @description og tag getter api
      */

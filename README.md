@@ -20,7 +20,10 @@ A set of useful apis
 # General usage
 
 ## Og tag getter
-https://polarpod.herokuapp.com/apis/ogtags?u=[URL]<br><br>
+
+``` 
+https://polarpod.herokuapp.com/apis/ogtags?u=[URL]
+``` 
 
 parameters:<br>
 * u: url<br>
@@ -32,7 +35,11 @@ response:<br>
 
  
 ## SVG QR Code generator
-https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]<br><br>
+
+``` 
+https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
+``` 
+
 parameters:<br>
 * u: data<br>
 * d: dark/light [true/false] (if true generates a lighet qr)<br>
@@ -46,7 +53,11 @@ response:<br>
 
 
 ## Video URL parser
-http://polarpod.herokuapp.com/apis/vidurl?u=[URL]<br>
+
+``` 
+http://polarpod.herokuapp.com/apis/vidurl?u=[URL]
+``` 
+
 params:<br>
 * u: video url
 
@@ -54,7 +65,11 @@ response:<br>
 * json
 
 ## Bad-word message filter
-https://polarpod.herokuapp.com/apis/filter?msg=[message_to_filter]<br><br>
+
+``` 
+https://polarpod.herokuapp.com/apis/filter?msg=[message_to_filter]
+``` 
+
 params:<br>
 * msg: message
 
@@ -91,17 +106,19 @@ response:<br>
   }
 ```
 
+## Modules credits
 
-# Modules credits
-[qrcode-svg by papnkukn](https://github.com/papnkukn/qrcode-svg)<br>
-[bad-words  by web-mech](https://github.com/web-mech/badwords)<br>
-[jsVideoUrlParser by Zod-](https://github.com/Zod-/jsVideoUrlParser)<br>
-[openGraphScraper by jshemas](https://github.com/jshemas/openGraphScraper)<br>
-[metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)<br>
+[qrcode-svg by papnkukn](https://github.com/papnkukn/qrcode-svg)
 
+[bad-words  by web-mech](https://github.com/web-mech/badwords)
 
-# LICENSE
+[jsVideoUrlParser by Zod-](https://github.com/Zod-/jsVideoUrlParser)
+
+[openGraphScraper by jshemas](https://github.com/jshemas/openGraphScraper)
+
+[metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)
+
+## LICENSE
+
 * MIT
-
-
-
+  
