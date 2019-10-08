@@ -1,86 +1,113 @@
 # PolarPod
-A set of useful apis 
 
+A set of useful apis
 
-# this API uses:
+## this API uses
+
 * open-graph-crapper
-* word filter [only english support up to now] 
-* atob and btoa base64 
+* word filter [only english support up to now]
+* atob and btoa base64
 * express
 * js-video-url-parser
-
 * qrcode-svg
 
-## Inside but not in use:
+## Inside but not in use
+
 * metafetch [unused, secondary]
 * nano-memoize [unused]
 * mysql
-
 
 # General usage
 
 ## Og tag getter
 
-``` 
+``` http
 https://polarpod.herokuapp.com/apis/ogtags?u=[URL]
-``` 
+```
 
-parameters:<br>
-* u: url<br>
+parameters:
 
-response:<br>
+* u: url
+
+response:
+
 * json
 
 ### see samples file or below
 
- 
 ## SVG QR Code generator
 
-``` 
+``` http
 https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
-``` 
+```
 
-parameters:<br>
-* u: data<br>
-* d: dark/light [true/false] (if true generates a lighet qr)<br>
-* w: width<br>
-* c: HEX color **(without the #)** _default colors: for dark themes=#CCCCCC and light=#222222_<br>
+parameters:
+
+* u: data
+* d: dark/light [true/false] (if true generates a lighet qr)
+* w: width
+* c: HEX color **(without the #)** _default colors: for dark themes=#CCCCCC and light=#222222_
 * bg: background color in HEX **(without the #)** _default is transparent_
 *if any param was send, a message will be showed*
 
-response:<br>
-* SVG document
+response:
 
+* SVG document
 
 ## Video URL parser
 
-``` 
-http://polarpod.herokuapp.com/apis/vidurl?u=[URL]
-``` 
+``` http
+http://polarpod.herokuapp.com/apis/video/meta?u=[URL]
+```
 
-params:<br>
+params:
+
 * u: video url
 
-response:<br>
+response:
+
+* json
+
+## Video thumbnail
+
+**same as video url parser, but with different response and url**
+
+``` http
+http://polarpod.herokuapp.com/apis/video/thumb?u=[URL]
+```
+
+supported platforms
+
+* youtube
+* vimeo
+
+params:
+
+* u: video url
+
+response:
+
 * json
 
 ## Bad-word message filter
 
-``` 
+``` http
 https://polarpod.herokuapp.com/apis/filter?msg=[message_to_filter]
-``` 
+```
 
-params:<br>
+params:
+
 * msg: message
 
-response:<br>
-* json
+response:
 
+* json
 
 # responses
 
-## og tags response sample:<br>
-```
+## og tags response sample
+
+``` json
   {
     "name": "GitHub",
     "title": "Build software better, together",
@@ -91,16 +118,32 @@ response:<br>
   }
 ```
 
-## video url parser:<br>
-```
+## video url parser
+
+_thumbnails is currently avaliable for youtube and vimeo only_
+_for youtube, maxresdefault will be retuned if avaliable, else will return '0.jpg', the same as hqdefault.jpg_
+_for vimeo thumbails the image size '_640' is replaced by '_1920'_
+
+``` json
   {
     "id": "jYCGSuNDy4M",
     "mediaType": "video",
-    "provider": "youtube"
-  }
+    "provider": "youtube",
+    "thumb":"https://img.youtube.com/vi/jYCGSuNDy4M/maxresdefault.jpg"
+  },
+
+ {
+    "id": "76979871",
+    "mediaType": "video",
+    "provider": "vimeo",
+    "thumb":"https://i.vimeocdn.com/video/452001751_1920.jpg",
+    "thumbOriginal":"https://i.vimeocdn.com/video/452001751_640.jpg"
+  },
 ```
-## bad-word filter:<br>
-```
+
+## bad-word filter
+
+``` json
   {
     "msg":"****"
   }
@@ -121,4 +164,3 @@ response:<br>
 ## LICENSE
 
 * MIT
-  

@@ -132,7 +132,7 @@ module.exports = (app, dir) => {
      * @returns {Object} video metadata (mediaType, provider, type, chanel, id...)
      */
     app.get('/apis/video/meta', function(req, res){
-        params = {
+        let params = {
             url: req.query.u
         }
 
@@ -140,7 +140,31 @@ module.exports = (app, dir) => {
             return res.status(400).send('no URL informed');
         }
         else{
-            return res.status(200).send(urlp(params))
+            urlp(params).then(r => {
+                return res.status(200).send(r)
+            })
+        }
+    })
+
+
+    /**
+     * 
+     * @description get video thumbnail (is part of .../video/meta but returns only the image(s))
+     * @returns {Object} video metadata (mediaType, provider, type, chanel, id...)
+     */
+    app.get('/apis/video/thumb', function(req, res){
+        let params = {
+            url: req.query.u,
+            thumb: true
+        }
+
+        if(params.url == undefined){
+            return res.status(400).send('no URL informed');
+        }
+        else{
+            urlp(params).then(r => {
+                return res.status(200).send(r)
+            })
         }
 
     })
