@@ -1,6 +1,5 @@
 # PolarPod
 
-A set of useful apis
 Polarpod is a set of useful APIs for data extraction and processing, with a little enfocus to be an alternative to paid services but for use in smaller projects. Is based on Node.js public avaliable modules.
 
 (caution, the next part may contain THE100 spoilers!)
