@@ -13,6 +13,7 @@ module.exports = (app, dir) => {
     const wordFilter = require('./word-filter');
     const resMsgs = require('./responseMessages');
     const conf = require('./config');
+    const hasher = require('object-hash');
 
 
     /**
@@ -186,6 +187,33 @@ module.exports = (app, dir) => {
         }
     });
 
+    /**
+     * @description hash function
+     * 
+     * params: d = data, m = mode (MD5 or sha1)
+     * 
+     * @returns the hash from given data
+     */
+    app.get('/apis/hasher', function(req, res, next){
+        let mode =  req.query.m;
+        let dat = req.query.d;
 
+        let mdrgx = new RegExp('MD5', 'gi');
+        let shagx = new RegExp('sha', 'gi');
+        if(mode == ''){
+            mode = 'SHA';
+        }
+
+        if(mdrgx.test(mode)){
+            return res.status(200).json({type: mode, original: dat, hash: hasher.MD5(dat), success: true});
+        }
+        else if(shagx.test(mode)){
+            return res.status(200).json({type: mode, original: dat, hash: hasher.sha1(dat), success: true})
+        }
+        else{
+            return res.status(400).json({type: mode, original: dat, hash: '', success: false})
+        }
+
+    })
 
 }

@@ -10,6 +10,7 @@ A set of useful apis
 * express
 * js-video-url-parser
 * qrcode-svg
+* object-hash
 
 ## Inside but not in use
 
@@ -33,7 +34,21 @@ response:
 
 * json
 
-### see samples file or below
+
+## SHA/MD5 hashes
+
+```http
+https://polarpod.herokuapp.com/apis/hasher?d=[data]&m=[MD5|SHA]
+```
+
+parameters
+
+* d: data
+* m: hash algorithm
+
+responses
+
+* json
 
 ## SVG QR Code generator
 
@@ -149,6 +164,26 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
   }
 ```
 
+## hasher
+
+```json
+  succesfull (status 200)
+  {
+    "type":"sha",
+    "original":"test",
+    "hash":"8d56ea07e4ac6175807ed5f66279715d394d8885",
+    "success":true
+  }
+
+  failed (status 400)
+  {
+    "type":"sha",
+    "original":"test",
+    "hash":"",
+    "success":false
+  }
+```
+
 ## Modules credits
 
 [qrcode-svg by papnkukn](https://github.com/papnkukn/qrcode-svg)
@@ -160,6 +195,8 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
 [openGraphScraper by jshemas](https://github.com/jshemas/openGraphScraper)
 
 [metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)
+
+[object-hash by addaleax](https://github.com/puleos/object-hash)
 
 ## LICENSE
 

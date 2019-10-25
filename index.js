@@ -4,6 +4,8 @@
  * 
  * @author Matsukii
  * 
+ * facebook embed video plugin url
+ * https://www.facebook.com/plugins/video.php?href=
  * 
  * * Og tag getter
  * https://polarpod.herokuapp.com/apis/ogtags?u=[url]
@@ -25,6 +27,8 @@ const path = require('path');
 const cors = require('cors')
 const conf = require('./src/config');
 
+const test = require('./src/facebookVideoUrlParser');
+test();
 
 // 0ac6kh - 1abz19
 const hasher = require('object-hash');
