@@ -14,6 +14,7 @@ module.exports = (app, dir) => {
     const resMsgs = require('./responseMessages');
     const conf = require('./config');
     const hasher = require('object-hash');
+    const sha2xx = require('js-sha256');
 
 
     /**
@@ -187,33 +188,77 @@ module.exports = (app, dir) => {
         }
     });
 
+   
+    
+
     /**
      * @description hash function
      * 
-     * params: d = data, m = mode (MD5 or sha1)
+     * params: d = data/text to hash
      * 
      * @returns the hash from given data
      */
-    app.get('/apis/hasher', function(req, res, next){
-        let mode =  req.query.m;
+    app.get('/apis/hash/:alg', (req, res, next)=>{
+        
+        /**
+         * @description send a bad querry construction warining
+         * @param {String} ori original text to hash 
+         * @param {String} alg algorithm
+         */
+        const malformedQuery = (ori, alg) =>{
+            return {
+                status: 400,
+                success: false,
+                original: ori,
+                algorithm: alg,
+                hash: '',
+                warning: 'Missing params',
+                date: new Date().toGMTString()
+            }
+        }
+
         let dat = req.query.d;
+        let alg = req.params.alg;
 
-        let mdrgx = new RegExp('MD5', 'gi');
-        let shagx = new RegExp('sha', 'gi');
-        if(mode == ''){
-            mode = 'SHA';
+        if(alg == ''){
+            res.send(404).send(resMsgs.hashNoParams);
         }
-
-        if(mdrgx.test(mode)){
-            return res.status(200).json({type: mode, original: dat, hash: hasher.MD5(dat), success: true});
-        }
-        else if(shagx.test(mode)){
-            return res.status(200).json({type: mode, original: dat, hash: hasher.sha1(dat), success: true})
+        else if(!dat || !alg){
+            res.status(400).send(malformedQuery(dat, alg));
         }
         else{
-            return res.status(400).json({type: mode, original: dat, hash: '', success: false})
-        }
+            let preform = {
+                status: 200,
+                success: true,
+                algorithm: alg,
+                original: dat,
+                date: new Date().toGMTString()
+            }
 
+            if(alg == 'sha1'){
+                preform.hash = hasher(dat, {algorithm:'sha1'});
+                preform.warning = resMsgs.hashWarnings.object;
+                res.status(200).json(preform);
+            }
+            else if(alg == 'sha256'){
+                preform.hash = sha2xx.sha256(dat);
+                res.status(200).json(preform);
+            }
+            else if(alg == 'sha224'){
+                preform.hash = sha2xx.sha224(dat);
+                res.status(200).json(preform);
+            }
+            else if(alg == 'md5'){
+                preform.hash = hasher(dat, {algorithm:'md5'});
+                preform.warning = resMsgs.hashWarnings.object;
+                res.status(200).json(preform);
+            }
+            else{
+                preform.hash = '';
+                preform.warning = resMsgs.hashWarnings.unsuported;
+                res.status(400).send(malformedQuery(dat, alg));
+            }
+        }
     })
 
 }

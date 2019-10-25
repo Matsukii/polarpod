@@ -11,6 +11,7 @@ A set of useful apis
 * js-video-url-parser
 * qrcode-svg
 * object-hash
+* js-sha256
 
 ## Inside but not in use
 
@@ -35,24 +36,33 @@ response:
 * json
 
 
-## SHA/MD5 hashes
+## SHA1/MD5/SHA256/SHA224 hashes
 
 ```http
-https://polarpod.herokuapp.com/apis/hasher?d=[data]&m=[MD5|SHA]
+https://polarpod.herokuapp.com/apis/hash/[sha1|md5|sha256|sha224]?d=[data]
 ```
 
 parameters
 
 * d: data
-* m: hash algorithm
+* ...apis/hash/[algorithm]: hash algorithm
 
 responses
 
 * json
+* text (if algorithm is missing)
+
+example
+
+```http
+https://polarpod.herokuapp.com/apis/hash/sha256?d=test
+```
+
+### Warning(known issue that will not be corrected soon): MD5 and SHA1 - do not expect the same hash from given text to be equal to other hash generators
 
 ## SVG QR Code generator
 
-``` http
+```http
 https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
 ```
 
@@ -167,21 +177,15 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
 ## hasher
 
 ```json
-  succesfull (status 200)
   {
-    "type":"sha",
+    "status":200,
+    "success":true,
+    "algorithm":"sha256",
     "original":"test",
-    "hash":"8d56ea07e4ac6175807ed5f66279715d394d8885",
-    "success":true
+    "date":"Fri, 25 Oct 2019 03:30:52 GMT",
+    "hash":"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
   }
 
-  failed (status 400)
-  {
-    "type":"sha",
-    "original":"test",
-    "hash":"",
-    "success":false
-  }
 ```
 
 ## Modules credits
@@ -197,6 +201,8 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
 [metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)
 
 [object-hash by puleos](https://github.com/puleos/object-hash)
+
+[js-sha256 by emn178](https://github.com/emn178/js-sha256)
 
 ## LICENSE
 

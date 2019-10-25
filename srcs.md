@@ -10,3 +10,4 @@
 # https://www.npmjs.com/package/btoa
 # https://www.npmjs.com/package/cors
 # https://www.npmjs.com/package/nano-memoize
+# https://www.npmjs.com/package/js-sha256
