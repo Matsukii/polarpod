@@ -196,7 +196,7 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
 
 [metafetch by brahma-dev](https://github.com/brahma-dev/metafetch)
 
-[object-hash by addaleax](https://github.com/puleos/object-hash)
+[object-hash by puleos](https://github.com/puleos/object-hash)
 
 ## LICENSE
 
