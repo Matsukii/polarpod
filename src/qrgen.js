@@ -1,4 +1,4 @@
-module.exports = (params, saveFile = false) => {
+module.exports = async(params, saveFile = false) => {
     qrcode = require('qrcode-svg');
 
     let colod = '#646464';
@@ -26,9 +26,9 @@ module.exports = (params, saveFile = false) => {
 
     // only for test
     if(saveFile){
-        qr.save("sample.svg", function(error) {
+        qr.save("public/code.svg", function(error) {
             if (error) throw error;
-            console.log("Done!");
+            // console.log("Done!");
         });
     }
 

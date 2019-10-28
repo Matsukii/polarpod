@@ -102,8 +102,34 @@ module.exports = (app, dir) => {
         }
 
         if(params.url == undefined){ res.status(400).send(resMsgs.qrNoParams) }
-        else{ return res.status(200).send(qrc(params)) }
+        else{ qrc(params).then(r => {
+            res.setHeader('Content-Type', 'image/svg+xml');
+            return res.status(200).send(r);
+        })}
     })
+
+
+    /**
+     * @description svg qr code generator api AS FILE RETURN
+     */
+    app.get('/apis/qr/file', function(req, res){
+        params = {
+            url    : req.query.u,
+            dark   : req.query.d,
+            width  : req.query.w,
+            color  : req.query.c,
+            bg     : req.query.bg
+        }
+
+        if(params.url == undefined){ res.status(400).send(resMsgs.qrNoParams) }
+        else{ 
+            qrc(params, true).then(r => {
+                return res.status(200).json({status: 200, success: true, url: `${dir}/code.svg`});
+            });
+        }
+    });
+
+    
 
 
 

@@ -7,7 +7,6 @@ Polarpod is a set of useful APIs for data extraction and processing, with a litt
 (caution, the next part may contain THE100 spoilers!) <br>
 The name came from "Polaris", "Escape-pod" and a a bit of 'south/north pole signs', Polaris is a space station from THE100 series.
 
-
 ## this API uses
 
 * open-graph-crapper
@@ -84,6 +83,16 @@ parameters:
 response:
 
 * SVG document
+
+### SVG file return
+
+_same as above just add /file, the code will be saved and avaliable at ... .com/code.svg_
+
+**this is for a specific use case that i needed**
+
+```http
+https://polarpod.herokuapp.com/apis/qr/file?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
+```
 
 ## Video URL parser
 
