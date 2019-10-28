@@ -1,6 +1,6 @@
 # Polarpod
 
-<img src="https://github.com/Matsukii/polarpod/blob/master/POLARPOD.svg" width="500px">
+<img src="http://polarpod.herokuapp.com/logo/POLARPOD.svg" width="500px">
 
 Polarpod is a set of useful APIs for data extraction and processing, with a little enfocus to be an alternative to paid services but for use in smaller projects. Is based on Node.js public avaliable modules.
 
