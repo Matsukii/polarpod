@@ -4,8 +4,8 @@
 
 Polarpod is a set of useful APIs for data extraction and processing, with a little enfocus to be an alternative to paid services but for use in smaller projects. Is based on Node.js public avaliable modules.
 
-(caution, the next part may contain THE100 spoilers!)
-The name came from "Polaris" and "Escape-pod", Polaris is a space station from THE100 series.
+(caution, the next part may contain THE100 spoilers!) <br>
+The name came from "Polaris", "Escape-pod" and a a bit of 'south/north pole signs', Polaris is a space station from THE100 series.
 
 
 ## this API uses
