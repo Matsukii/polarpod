@@ -220,6 +220,8 @@ module.exports = (app, dir) => {
     /**
      * @description hash function
      * 
+     * TODO: MOVE THIS CODE TO A NEW FILE
+     * 
      * params: d = data/text to hash
      * 
      * @returns the hash from given data
@@ -285,6 +287,32 @@ module.exports = (app, dir) => {
                 res.status(400).send(malformedQuery(dat, alg));
             }
         }
+    });
+
+    app.get("/apis/hash/raw/:alg", (req, res) => {
+            
+        let dat = req.query.d;
+        let alg = req.params.alg;
+
+        if(alg == ''){
+            res.send(404).send(resMsgs.hashNoParams);
+        }
+        else if(!dat || !alg){
+            res.status(400).send(malformedQuery(dat, alg));
+        }
+        else {
+            if(alg == 'sha256'){
+                let h = sha2xx.sha256(dat);
+                res.status(200).send(h);
+            }
+            else if(alg == 'sha224'){
+                let h = sha2xx.sha224(dat);
+                res.status(200).send(h);
+            }
+        }
+
+        
     })
+
 
 }

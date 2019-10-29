@@ -47,6 +47,12 @@ response:
 https://polarpod.herokuapp.com/apis/hash/[sha1|md5|sha256|sha224]?d=[data]
 ```
 
+### Raw hash - ONLY FOR SHA256 and SHA224 (temporarily)
+
+```http
+https://polarpod.herokuapp.com/apis/hash/rar/[sha256|sha224]?d=[data]
+```
+
 parameters
 
 * d: data
@@ -61,6 +67,10 @@ example
 
 ```http
 https://polarpod.herokuapp.com/apis/hash/sha256?d=test
+```
+
+```http
+https://polarpod.herokuapp.com/apis/hash/raw/sha256?d=test
 ```
 
 ### Warning(known issue that will not be corrected soon): MD5 and SHA1 - do not expect the same hash from given text to be equal to other hash generators
