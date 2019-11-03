@@ -24,6 +24,12 @@ module.exports = (app, dir) => {
         res.redirect('https://github.com/Matsukii/polarpod');
     })
 
+    // HOME
+    app.get('/home', (req, res) =>{
+        // res.redirect('https://github.com/Matsukii/polarpod');
+        res.status(200).sendFile(`${dir}/public/home/home.html`);
+    })
+
     /**
      * @description og tag getter api
      */
