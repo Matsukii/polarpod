@@ -1,14 +1,14 @@
 module.exports = async(params) => {
     const parser = require('js-video-url-parser');
     const fetch  = require('node-fetch');
+    const conf   = require('./config').vid;
     // console.log(parser.parse(params.url));
 
     let metadata = parser.parse(params.url);
-
     let onlyThumb = params.thumb;
 
     /**
-     * @descrioption try get thumbnail for youtube videos
+     * @descrioption try get thumbnail for youtube and vimeo videos
      * 
      * ! other platforms may be added later
      * 
@@ -20,22 +20,21 @@ module.exports = async(params) => {
      * 
      */
     if(metadata.provider == 'youtube'){
-        let turl = `https://img.youtube.com/vi/${metadata.id}`;
+        let tURL = `${conf.youtube.apis.thumbnailsUrl}/${metadata.id}`;
 
-        await fetch(`${turl}/maxresdefault.jpg`, {
+        await fetch(`${tURL}/maxresdefault.jpg`, {
             method: 'GET'
         }).then(r => {
             if(r.status == 200){
-                metadata.thumb = `${turl}/maxresdefault.jpg`;
+                metadata.thumb = `${tURL}/maxresdefault.jpg`;
             }
             else{
-                metadata.thumb = `${turl}/0.jpg`;
+                metadata.thumb = `${tURL}/0.jpg`;
             }
         })
     }
     else if(metadata.provider == 'vimeo'){
-        let apiURL = `https://vimeo.com/api/v2/video/${metadata.id}.json`
-        await fetch(apiURL, {
+        await fetch(`${conf.vimeo.apis.url}/${metadata.id}.json`, {
             method: 'GET'
         }).then(r => r.json()).then(r => {
             let thum = r[0].thumbnail_large.replace(/_[0-9]{1,4}/gi, '_1920');
@@ -47,8 +46,6 @@ module.exports = async(params) => {
     if(onlyThumb){
         return {thumb: metadata.thumb, originalSize: metadata.thumbOriginal};
     }
-    else{
-        return metadata;
-    }
+    else{ return metadata }
 
 };

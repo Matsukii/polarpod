@@ -1,5 +1,7 @@
 node_modules
 desktop.ini
 other
+public/code.svg
 code.svg
 .vscode
+src/hasher_copy.js

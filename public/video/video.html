@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Polarpod</title>
-    <link rel="stylesheet" href="/home/home.css">
+    <title>Polarpod - Video metadata parser</title>
+    <link rel="stylesheet" href="/video/video.css">
     <link rel="shortcut icon" href="/logo/app_icon-dark.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 
 </head>
-<!-- konnichiwa -->
+<!-- konnichiwa sekai -->
 <body class="dark" link="#03A9F4" vlink="#03A9F4">
     <h1>Get video metadata</h1>
     <br>
@@ -21,6 +21,8 @@
 
         <div id="responsed">
             <p>Original url: <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
+            <p>Title: {{res.title}}</p>
+            <p>Description: {{res.description}}</p>
             <p>Video id: {{res.id}}</p>
             <p>Media type: {{res.mediaType}}</p>
             <p>provider: {{res.provider}}</p>
@@ -32,6 +34,6 @@
     </div>
 
 
-    <script src="/home/home.js"></script>
+    <script src="/video/video.js"></script>
 </body>
 </html>

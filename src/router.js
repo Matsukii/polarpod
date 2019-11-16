@@ -6,15 +6,17 @@
  * 
  */
 module.exports = (app, dir) => {
-    const ogs = require('open-graph-scraper');
-    const qrc = require('./qrgen');
-    const urlp = require('./urlVideoParser');
-    const ops = require('metafetch');
-    const wordFilter = require('./word-filter');
-    const resMsgs = require('./responseMessages');
     const conf = require('./config');
-    const hasher = require('object-hash');
-    const sha2xx = require('js-sha256');
+    const resMsgs = require('./responseMessages');
+
+    const qrc = require('./qrgen');
+    const ops = require('metafetch');
+    const ogs = require('open-graph-scraper');
+    const hashs = require('./hasher');
+    const vidMeta = require('./videoMeta');
+    const validUrl = require('valid-url');
+    const wordFilter = require('./word-filter');
+    
 
 
     /**
@@ -25,70 +27,63 @@ module.exports = (app, dir) => {
     })
 
     // HOME
-    app.get('/home', (req, res) =>{
-        // res.redirect('https://github.com/Matsukii/polarpod');
-        res.status(200).sendFile(`${dir}/public/home/home.html`);
+    app.get('/video', (req, res) =>{
+        res.status(200).sendFile(`${dir}/public/video/video.html`);
     })
 
     /**
-     * @description og tag getter api
+     * @description og tag getter
      */
     app.get("/apis/ogtags", async(req, res) => {
-        url = req.query.u;
-        
-        let resp;
-        let img;
-        
-        
-        let ogOps = {'url': url, 'timeout': 2000, 'followAllRedirects': false}
+        let url = req.query.u;
+        if(!url){ return res.status(400).send('No params sended')}
+        if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
-        ogs(ogOps, function (err, rst, repso) {
-            if(rst.data != undefined){
-                if(rst.data.ogImage.url != undefined || rst.data.ogImage[0] != undefined){
-                    if(rst.data.ogImage[0] != undefined){
-                        rst.data.ogImage[0].url != undefined ? img = rst.data.ogImage[0].url : null
+        ogs({'url': url, ...conf.og.cfg}, (e, ret) => {
+            let img;
+            let tags = ret.data;
+
+            if(tags != undefined && !e){
+
+                if(tags.ogImage.url != undefined || tags.ogImage[0] != undefined){
+                    if(tags.ogImage[0] != undefined){
+                        tags.ogImage[0].url != undefined ? img = tags.ogImage[0].url : null
                     }
-                    else{img = rst.data.ogImage.url}
+                    else{img = tags.ogImage.url}
                 }
                 else{img = ''}
                 
-                // ! aditional treatment to imgs like /path/to/image.png
-                // if(img != ''){
-                //     if(img.startsWith('/')){
-                //         img = `${rst.data.ogUrl}${img}`
-                //     }
-                // }
+                return res.status(200).send({
+                    name    : tags.ogSiteName || '',
+                    title   : tags.ogTitle || '',
+                    desc    : tags.ogDescription || '',
+                    type    : tags.ogType || '',
+                    url     : tags.ogUrl  || ret.requestUrl || '',
+                    img     : img,
+                    success : true
+                });
 
-                resp = {
-                    name: rst.data.ogSiteName || '',
-                    title: rst.data.ogTitle || '',
-                    desc: rst.data.ogDescription || '',
-                    type: rst.data.ogType || '',
-                    url: rst.data.ogUrl || rst.requestUrl || '',
-                    img: img,
-                }
-                // resp = rst;
-                return res.status(200).send(resp);
             }
-            else{return res.status(404).send(conf.ogTags.defaultResponse)}
+            else{return res.status(404).send({...resMsgs.og.defaultRes, success:false})}
         })
     });
 
 
     /**
-     * @description og tag getter from metafetch library
-     * @deprecated use ogtags option 
+     * @description get meta tags from url using metafetch module
+     * ! not pre-processed data, sends back all the metadata.
      */
-    app.get('/apis/op', function(req, res){
-        url = req.query.u;
+    app.get('/apis/op', (req, res) => {
+        let url = req.query.u;
+        if(!url){ return res.status(400).send('No params sended')}
+        if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
         ops.fetch(url, function(err, meta){
-            // console.log(meta);
             if(!err){
-                return res.status(200).send(meta)
+                return res.status(200).send({...meta, success: true})
             }
             else{
-                return res.status(400).send('Some error occured during fetching')
+                return res.status(400).send({warn: 'Some error occured during fetching', success: false})
             }
         })
     })
@@ -96,69 +91,51 @@ module.exports = (app, dir) => {
 
 
     /**
-     * @description svg qr code generator api
+     * @description svg qr code generator
      */
     app.get('/apis/qr', function(req, res){
         params = {
-            url    : req.query.u,
+            data   : req.query.u,
             dark   : req.query.d,
             width  : req.query.w,
             color  : req.query.c,
             bg     : req.query.bg
         }
 
-        if(params.url == undefined){ res.status(400).send(resMsgs.qrNoParams) }
+        if(params.data == undefined){ res.status(400).send(resMsgs.qr.noParams) }
         else{ qrc(params).then(r => {
             res.setHeader('Content-Type', 'image/svg+xml');
             return res.status(200).send(r);
+        }).catch(e => {
+            return res.status(500).send("Somethis goes wrong");
         })}
     })
 
 
     /**
-     * @description svg qr code generator api AS FILE RETURN
+     * @description svg qr code generator AS FILE RETURN (open /code.svg)
+     * @deprecated use /apis/qr that returns as svg file...
      */
     app.get('/apis/qr/file', function(req, res){
         params = {
-            url    : req.query.u,
+            data   : req.query.u,
             dark   : req.query.d,
             width  : req.query.w,
             color  : req.query.c,
             bg     : req.query.bg
         }
 
-        if(params.url == undefined){ res.status(400).send(resMsgs.qrNoParams) }
+        if(params.data == undefined){ res.status(400).send(resMsgs.qr.noParams) }
         else{ 
             qrc(params, true).then(r => {
                 return res.status(200).json({status: 200, success: true, url: `${dir}/code.svg`});
+            }).catch(e => {
+                return res.status(500).send("Somethis goes wrong");
             });
         }
     });
 
     
-
-
-
-    /**
-     * @deprecated this will not be suported on feature, use /apis/video/meta
-     * @description get video params from given URL
-     * @returns {Object} video metadata (mediaType, provider, type, chanel, id...)
-     */
-    app.get('/apis/vidurl', function(req, res){
-        params = {
-            url: req.query.u
-        }
-
-        if(params.url == undefined){
-            return res.status(400).send('no URL informed');
-        }
-        else{
-            return res.status(200).send(urlp(params))
-        }
-
-    })
-
-
 
     /**
      * 
@@ -170,15 +147,30 @@ module.exports = (app, dir) => {
             url: req.query.u
         }
 
-        if(params.url == undefined){
-            return res.status(400).send('no URL informed');
-        }
+        if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
+        if(params.url == undefined){ return res.status(400).send('no URL informed')}
         else{
-            urlp(params).then(r => {
-                return res.status(200).send(r)
+            vidMeta(params).then(r => {
+                try {
+                    ogs({'url': params.url, timeout: 1000}, (e, re) => {
+                        if(re.data != undefined && !e){
+                            return res.status(200).send({
+                                ...r,
+                                title: re.data.ogTitle,
+                                description: re.data.ogDescription
+                            })
+                        }
+                        else{
+                            return res.status(200).send(r)
+                        }
+                    })
+                } catch (e) {
+                    return res.status(200).send(r)
+                }
             })
         }
     })
+
 
 
     /**
@@ -191,17 +183,17 @@ module.exports = (app, dir) => {
             url: req.query.u,
             thumb: true
         }
-
-        if(params.url == undefined){
-            return res.status(400).send('no URL informed');
-        }
+        
+        if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
+        if(params.url == undefined){ return res.status(400).send('no URL informed')}
         else{
-            urlp(params).then(r => {
+            vidMeta(params).then(r => {
                 return res.status(200).send(r)
             })
         }
-
     })
+
+
 
     /**
      * @description bad word message filter
@@ -226,98 +218,43 @@ module.exports = (app, dir) => {
     /**
      * @description hash function
      * 
-     * TODO: MOVE THIS CODE TO A NEW FILE
-     * 
-     * params: d = data/text to hash
-     * 
      * @returns the hash from given data
      */
     app.get('/apis/hash/:alg', (req, res, next)=>{
-        
-        /**
-         * @description send a bad querry construction warining
-         * @param {String} ori original text to hash 
-         * @param {String} alg algorithm
-         */
-        const malformedQuery = (ori, alg) =>{
-            return {
-                status: 400,
-                success: false,
-                original: ori,
-                algorithm: alg,
-                hash: '',
-                warning: 'Missing params',
-                date: new Date().toGMTString()
-            }
-        }
-
+       
         let dat = req.query.d;
         let alg = req.params.alg;
 
-        if(alg == ''){
-            res.send(404).send(resMsgs.hashNoParams);
-        }
-        else if(!dat || !alg){
-            res.status(400).send(malformedQuery(dat, alg));
+        let hashed = hashs({dat, alg}, resMsgs.warnings.hash, false);
+
+        if(hashed){
+            return res.status(hashed.status).send(hashed);
         }
         else{
-            let preform = {
-                status: 200,
-                success: true,
-                algorithm: alg,
-                original: dat,
-                date: new Date().toGMTString()
-            }
-
-            if(alg == 'sha1'){
-                preform.hash = hasher(dat, {algorithm:'sha1'});
-                preform.warning = resMsgs.hashWarnings.object;
-                res.status(200).json(preform);
-            }
-            else if(alg == 'sha256'){
-                preform.hash = sha2xx.sha256(dat);
-                res.status(200).json(preform);
-            }
-            else if(alg == 'sha224'){
-                preform.hash = sha2xx.sha224(dat);
-                res.status(200).json(preform);
-            }
-            else if(alg == 'md5'){
-                preform.hash = hasher(dat, {algorithm:'md5'});
-                preform.warning = resMsgs.hashWarnings.object;
-                res.status(200).json(preform);
-            }
-            else{
-                preform.hash = '';
-                preform.warning = resMsgs.hashWarnings.unsuported;
-                res.status(400).send(malformedQuery(dat, alg));
-            }
+            return res.status(500).send('some internal error occurred');
         }
+
     });
 
+
+    /**
+     * @description same as other hash but return plain text response ans support only sha256/224
+     */
     app.get("/apis/hash/raw/:alg", (req, res) => {
             
         let dat = req.query.d;
         let alg = req.params.alg;
 
-        if(alg == ''){
-            res.send(404).send(resMsgs.hashNoParams);
-        }
-        else if(!dat || !alg){
-            res.status(400).send(malformedQuery(dat, alg));
-        }
-        else {
-            if(alg == 'sha256'){
-                let h = sha2xx.sha256(dat);
-                res.status(200).send(h);
+        if(/(sha256|sha224)/gi.test(alg)){
+            let hashed = hashs({dat, alg}, resMsgs.warnings.hash, true);
+            if(hashed){
+                return res.status(202).send(hashed);
             }
-            else if(alg == 'sha224'){
-                let h = sha2xx.sha224(dat);
-                res.status(200).send(h);
+            else{
+                return res.status(500).send('some error occurred');
             }
         }
-
-        
+        else{ return res.status(422).send("Unsuported") }
     })
 
 

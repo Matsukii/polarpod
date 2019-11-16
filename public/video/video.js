@@ -1,6 +1,4 @@
 
-
-
 let get;
 let app = new Vue({
     el:'#polar',

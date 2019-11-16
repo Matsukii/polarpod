@@ -14,23 +14,19 @@ module.exports = async(params, saveFile = false) => {
     params.bg != undefined ? bcg = `#${params.bg}` : bcg = 'transparent';
 
     let config = {
-        padding: 1,
-        color: colod,
-        background:  bcg,
-        content: params.url,
-        width:  params.width || 100,
-        height: params.width || 100,
+        padding    : 1,
+        color      : colod,
+        background : bcg,
+        content    : params.data,
+        width      : params.width || 100,
+        height     : params.width || 100,
     }
 
     var qr = new qrcode(config);
 
-    // only for test
     if(saveFile){
-        qr.save("public/code.svg", function(error) {
-            if (error) throw error;
-            // console.log("Done!");
-        });
+        qr.save("public/code.svg", (e) => { if (e) throw e });
     }
 
-    return qr.svg()
+    return qr.svg();
 }
