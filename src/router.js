@@ -152,7 +152,7 @@ module.exports = (app, dir) => {
         else{
             vidMeta(params).then(r => {
                 try {
-                    ogs({'url': params.url, timeout: 1000}, (e, re) => {
+                    ogs({'url': params.url, timeout: 2000}, (e, re) => {
                         if(re.data != undefined && !e){
                             return res.status(200).send({
                                 ...r,
