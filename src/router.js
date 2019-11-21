@@ -37,7 +37,7 @@ module.exports = (app, dir) => {
     app.get("/apis/ogtags", async(req, res) => {
         let url = req.query.u;
         if(!url){ return res.status(400).send('No params sended')}
-        if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
+        // if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
         ogs({'url': url, ...conf.og.cfg}, (e, ret) => {
             let img;
@@ -76,7 +76,7 @@ module.exports = (app, dir) => {
     app.get('/apis/op', (req, res) => {
         let url = req.query.u;
         if(!url){ return res.status(400).send('No params sended')}
-        if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
+        // if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
         ops.fetch(url, function(err, meta){
             if(!err){
@@ -147,7 +147,7 @@ module.exports = (app, dir) => {
             url: req.query.u
         }
 
-        if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
+        // if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
         if(params.url == undefined){ return res.status(400).send('no URL informed')}
         else{
             vidMeta(params).then(r => {
@@ -184,7 +184,7 @@ module.exports = (app, dir) => {
             thumb: true
         }
         
-        if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
+        // if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
         if(params.url == undefined){ return res.status(400).send('no URL informed')}
         else{
             vidMeta(params).then(r => {
