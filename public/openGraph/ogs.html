@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Polarpod - Video metadata parser</title>
+    <title>Polarpod - Get Open graph tags</title>
     <link rel="stylesheet" href="/video/video.css">
     <link rel="stylesheet" href="/global.css">
     <link rel="shortcut icon" href="/logo/app_icon-dark.png" type="image/x-icon">
@@ -13,28 +13,28 @@
 </head>
 <!-- konnichiwa sekai -->
 <body class="dark" link="#03A9F4" vlink="#03A9F4">
-    <h1>Get video metadata</h1>
+    <h1>Get open graph tags</h1>
     <br>
     <br>
     <div id="polar">
         <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
-        <input type="text" class="inputs" v-model="dataIn" placeholder="Video URL">
+        <input type="text" class="inputs" v-model="dataIn" placeholder="Any URL">
 
         <div id="responsed">
-            <p>Original url: <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
+            <p>sended url: <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
+            <p>url: {{res.url}}</p>
+            <p>Name: {{res.name}}</p>
             <p>Title: {{res.title}}</p>
-            <p>Description: {{res.description}}</p>
-            <p>Video id: {{res.id}}</p>
-            <p>Media type: {{res.mediaType}}</p>
-            <p>provider: {{res.provider}}</p>
+            <p>Description: {{res.desc}}</p>
+            <p>Type: {{res.type}}</p>
 
-            <a target="blank" v-bind:href="res.thumb">
-                <img v-bind:src="res.thumb" width="300px" alt="thumbnail">
+            <a target="blank" v-bind:href="res.img">
+                <img v-bind:src="res.img" width="300px" alt="thumbnail">
             </a>
         </div>
     </div>
 
 
-    <script src="/video/video.js"></script>
+    <script src="/openGraph/ogs.js"></script>
 </body>
 </html>

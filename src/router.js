@@ -26,9 +26,14 @@ module.exports = (app, dir) => {
         res.redirect('https://github.com/Matsukii/polarpod');
     })
 
-    // HOME
+    // Video 
     app.get('/video', (req, res) =>{
         res.status(200).sendFile(`${dir}/public/video/video.html`);
+    })
+
+    // Open graph
+    app.get('/ogtags', (req, res) =>{
+        res.status(200).sendFile(`${dir}/public/openGraph/ogs.html`);
     })
 
     /**
