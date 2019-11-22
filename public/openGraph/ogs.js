@@ -5,6 +5,7 @@ let app = new Vue({
     data:{
         dataIn: '',
         dataLabel: 'Any URL',
+        showRaw: false,
         urlPattern: new RegExp('(http||https):\/\/[0-9a-zA-Z]*.'),
         res:{
             name:"",

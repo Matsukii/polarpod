@@ -1,38 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://polarpod.herokuapp.com/ogtags">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Polarpod - Get Open graph tags</title>
-    <link rel="stylesheet" href="/video/video.css">
+    <link rel="stylesheet" href="/openGraph/ogs.css">
     <link rel="stylesheet" href="/global.css">
     <link rel="shortcut icon" href="/logo/app_icon-dark.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:name" content="Polarpod"/>
+    <meta property="og:title" content="Open Graph (og) tag scrapper"/>
+    <meta property="og:site_name" content="Polarpod">
+    <meta property="og:description" content="Get Open Graph tags from a website"/>
+    <meta property="og:url" content="https://polarpod.herokuapp.com/ogtags"/>
+    <meta property="og:image" content="https://polarpod.herokuapp.com/logo/app_icon-dark.png"/>
+
 </head>
 <!-- konnichiwa sekai -->
 <body class="dark" link="#03A9F4" vlink="#03A9F4">
-    <h1>Get open graph tags</h1>
-    <br>
-    <br>
-    <div id="polar">
-        <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
-        <input type="text" class="inputs" v-model="dataIn" placeholder="Any URL">
+        <h1>Open graph</h1>
+        <h3>Get Open Graph (og) tags from a website</h3>
+        <br>
+        <br>
+        <div id="polar">
+            <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
+            <input type="text" class="inputs" v-model="dataIn" placeholder="Any URL">
+    
+            <br>
+    
+            <h2><a>Discovered:</a></h2>
+            <div id="responsed">
+                <p v-if="dataIn"><b>Your url:</b> <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
+                <p v-if="res.url != ''"><b>URL:</b> {{res.url}}</p>
+                <p v-if="res.name"><b>name:</b> {{res.name}}</p>
+                <p v-if="res.desc"><b>Description:</b> {{res.desc}}</p>
+                <p v-if="res.title"><b>Title:</b> {{res.title}}</p>
+                <p v-if="res.type"><b>Type:</b> {{res.type}}</p>
+                <!-- <p v-if="!res"><b warn>Nothing founded</b></p> -->
 
-        <div id="responsed">
-            <p>sended url: <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
-            <p>url: {{res.url}}</p>
-            <p>Name: {{res.name}}</p>
-            <p>Title: {{res.title}}</p>
-            <p>Description: {{res.desc}}</p>
-            <p>Type: {{res.type}}</p>
+                <button v-on:click="showRaw = !showRaw">Show raw response</button> <br>
+                <p raw v-if="showRaw">{{res}}</p>
 
-            <a target="blank" v-bind:href="res.img">
-                <img v-bind:src="res.img" width="300px" alt="thumbnail">
-            </a>
+                <a target="blank" v-bind:href="res.img">
+                    <img v-if="res.img" v-bind:src="res.img" width="300px" alt="thumbnail">
+                </a>
+            </div>
         </div>
-    </div>
 
 
     <script src="/openGraph/ogs.js"></script>

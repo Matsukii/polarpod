@@ -81,3 +81,9 @@
 * {
     font-family: 'Space Mono', monospace;
 }
+
+
+#responsed{
+    max-width: 90%;
+    word-wrap: break-word;
+}

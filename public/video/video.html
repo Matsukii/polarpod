@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://polarpod.herokuapp.com/ogtags">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,26 +10,43 @@
     <link rel="shortcut icon" href="/logo/app_icon-dark.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:name" content="Polarpod"/>
+    <meta property="og:site_name" content="Polarpod">
+    <meta property="og:title" content="Video url/metadata parser"/>
+    <meta property="og:description" content="Get data about some video URL"/>
+    <meta property="og:url" content="https://polarpod.herokuapp.com/video"/>
+    <meta property="og:image" content="https://polarpod.herokuapp.com/logo/app_icon-dark.png"/>
+
 </head>
 <!-- konnichiwa sekai -->
 <body class="dark" link="#03A9F4" vlink="#03A9F4">
-    <h1>Get video metadata</h1>
+    <h1>Video metadata and url parser</h1>
+    <h3>Get metadata and parse URL from some video,<br> generally include id, channel, provider, media type and thumbnail</h3>
     <br>
     <br>
     <div id="polar">
         <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
         <input type="text" class="inputs" v-model="dataIn" placeholder="Video URL">
 
+        <br>
+
+        <h2><a>Discovered:</a></h2>
         <div id="responsed">
-            <p>Original url: <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
-            <p>Title: {{res.title}}</p>
-            <p>Description: {{res.description}}</p>
-            <p>Video id: {{res.id}}</p>
-            <p>Media type: {{res.mediaType}}</p>
-            <p>provider: {{res.provider}}</p>
+            <p v-if="dataIn"><b>Original url:</b> <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
+            <p v-if="res.title"><b>Title:</b> {{res.title}}</p>
+            <p v-if="res.description"><b>Description:</b> {{res.description}}</p>
+            <p v-if="res.id"><b>Video id:</b> {{res.id}}</p>
+            <p v-if="res.channel"><b>Channel:</b> {{res.channel}}</p>
+            <p v-if="res.mediaType != ''"><b>Media type:</b> {{res.mediaType}}</p>
+            <p v-if="res.provider != ''"><b>provider:</b> {{res.provider}}</p>
+            <p v-if="res.params"><b>other params:</b> {{res.params}}</p>
+
+            <button v-on:click="showRaw = !showRaw">Show raw response</button> <br>
+            <p raw v-if="showRaw">{{res}}</p>
 
             <a target="blank" v-bind:href="res.thumb">
-                <img v-bind:src="res.thumb" width="300px" alt="thumbnail">
+                <img v-if="res.thumb" v-bind:src="res.thumb" width="300px" alt="thumbnail">
             </a>
         </div>
     </div>
