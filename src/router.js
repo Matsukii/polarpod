@@ -16,25 +16,45 @@ module.exports = (app, dir) => {
     const vidMeta = require('./videoMeta');
     const validUrl = require('valid-url');
     const wordFilter = require('./word-filter');
+    const fbCleanLink = require('./face-cleaner');
     
 
 
     /**
      * @description redirect to project repo
      */
-    app.get('/', (req, res) =>{
-        res.redirect('https://github.com/Matsukii/polarpod');
-    })
+    app.get('/', (req, res) => res.redirect('https://github.com/Matsukii/polarpod'))
 
     // Video 
-    app.get('/video', (req, res) =>{
-        res.status(200).sendFile(`${dir}/public/video/video.html`);
-    })
+    app.get('/video', (req, res) => res.status(200).sendFile(`${dir}/public/video/video.html`))
 
     // Open graph
-    app.get('/ogtags', (req, res) =>{
-        res.status(200).sendFile(`${dir}/public/openGraph/ogs.html`);
-    })
+    app.get('/ogtags', (req, res) => res.status(200).sendFile(`${dir}/public/openGraph/ogs.html`) )
+
+    // clean facebook url
+    app.get('/cleanfb', (req, res) => res.status(200).sendFile(`${dir}/public/face-cleaner/cleanfb.html`))
+    
+    //* clean facebook url api
+    app.get('/apis/cleanfb', (req, res) => {
+        let url = req.query.u;
+        if(!url){return res.status(400).send('No params sended')}
+        try {
+            return res.status(200).json({
+                original: url,
+                clean: fbCleanLink(url),
+                timestamp: Date.now(),
+                success: true
+            });
+        } catch (e) {
+            return res.status(500).send({
+                original: url,
+                clean: '',
+                timestamp: Date.now(),
+                success: false
+            })
+        }
+    });
+
 
     /**
      * @description og tag getter

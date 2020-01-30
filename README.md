@@ -26,6 +26,22 @@ The name came from "Polaris", "Escape-pod" and a a bit of 'south/north pole sign
 
 # General usage
 
+## Facebook Url 'cleaner'
+
+Extract original url from facebook links before redirect (any click redrects to facebook(dot)com/l.php, this extract)
+
+```http
+https://polarpod.herokuapp.com/apis/cleanfb?u=[URL]
+```
+
+parameters:
+
+* u: url
+
+response:
+
+* json
+
 ## Og tag getter
 
 ``` http
@@ -211,6 +227,18 @@ _for vimeo thumbails the image size '_640' is replaced by '_1920'_
     "hash":"9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08"
   }
 
+```
+
+
+## facebook url 'cleaner'
+
+```json
+  {
+    "original":"some link copied from fb",
+    "clean":"extracted",
+    "timestamp":1580420810267,
+    "success":true
+  }
 ```
 
 ## Modules credits

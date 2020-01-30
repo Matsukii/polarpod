@@ -31,6 +31,9 @@ app.use(express.static('public'));
 app.use(express.static('assets'));
 app.use(express.urlencoded({ extended: true }));
 
+
+
+
 //* call router
 var router = require(`${__dirname}/src/router`) (app, __dirname);
 

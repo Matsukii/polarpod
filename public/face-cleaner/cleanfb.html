@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://polarpod.herokuapp.com/cleanfb">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Polarpod - Clean facebook links</title>
+    <link rel="stylesheet" href="/face-cleaner/cleanfb.css">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="shortcut icon" href="/logo/app_icon-dark.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+
+    <meta property="og:type" content="website">
+    <meta property="og:name" content="Polarpod"/>
+    <meta property="og:site_name" content="Polarpod">
+    <meta property="og:title" content="Facebook URL param cleaner"/>
+    <meta property="og:description" content="Remove fbclid, extract original link from facebook post"/>
+    <meta property="og:url" content="https://polarpod.herokuapp.com/cleanfb"/>
+    <meta property="og:image" content="https://polarpod.herokuapp.com/logo/app_icon-dark.png"/>
+
+</head>
+<!-- konnichiwa sekai -->
+<body class="dark" link="#03A9F4" vlink="#03A9F4">
+    <h1>Facebook url 'cleaner'</h1>
+    <h2>API link: <a href="/apis/cleanfb?u=">https://polarpod.herokuapp.com/apis/cleanfb?u=</a></h2>
+    <h3>Extract original link from facebook post <br>(facebook redirect any link to 'facebook.com/l.php' before <br> go to final link, this api extract the original <br> link from url and remove 'fb click id' <br> its a way to avoid trackers from clicks)</h3>
+    <br>
+    <br>
+    <div id="polar">
+        <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
+        <input type="text" class="inputs" v-model="dataIn" placeholder="Link to clear">
+
+        <br>
+
+        <h2><a>Discovered:</a></h2>
+        <div id="responsed">
+            <p v-if="dataIn"><b>Original url:</b> <a target="blank" v-bind:href="dataIn">{{dataInCut}}</a></p>
+            <p v-if="dataOut"><b>Cleaned url:</b> <a target="blank" v-bind:href="dataOut">{{dataOut}}</a></p>
+
+            <button v-on:click="showRaw = !showRaw" v-if='false'>How it works</button> <br>
+            <p raw v-if="showRaw && false">
+                This code can be used in browser devTools console <br><br>
+                url = new URL([link_to_clear]) <br>
+                let link = new URL(url.searchParams.get('u'));<br>
+                link = `${link.origin}${link.pathname}`<br>
+            </p>
+
+            
+        </div>
+    </div>
+
+
+    <script src="/face-cleaner/cleanfb.js"></script>
+</body>
+</html>
