@@ -52,3 +52,9 @@ button{
     border-radius: 5px;
     margin: 10px;
 }
+
+#useApiFetch{
+    width: 17px;
+    height: 20px;
+    position: absolute;
+}

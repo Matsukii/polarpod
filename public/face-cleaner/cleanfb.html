@@ -32,6 +32,10 @@
 
         <br>
 
+        <label for="useApiFetch">Use API call to resolve URL</label>
+        <input type="checkbox" id="useApiFetch" v-model="useApiFetch">
+        <br>
+
         <h2><a>Discovered:</a></h2>
         <div id="responsed">
             <p v-if="dataIn"><b>Original url:</b> <a target="blank" v-bind:href="dataIn">{{dataInCut}}</a></p>

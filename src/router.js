@@ -35,7 +35,7 @@ module.exports = (app, dir) => {
     app.get('/cleanfb', (req, res) => res.status(200).sendFile(`${dir}/public/face-cleaner/cleanfb.html`))
     
     //* clean facebook url api
-    app.get('/apis/cleanfb', (req, res) => {
+    app.get('/apis/cleanfb/:redir', (req, res) => {
         let url = req.query.u;
         if(!url){return res.status(400).send('No params sended')}
         try {
@@ -45,6 +45,17 @@ module.exports = (app, dir) => {
                 timestamp: Date.now(),
                 success: true
             });
+            if(req.params.redir){
+                res.redirect(fbCleanLink(url))
+            }
+            else{
+                return res.status(200).json({
+                    original: url,
+                    clean: fbCleanLink(url),
+                    timestamp: Date.now(),
+                    success: true
+                });
+            }
         } catch (e) {
             return res.status(500).send({
                 original: url,

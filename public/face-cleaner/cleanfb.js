@@ -9,6 +9,7 @@ let app = new Vue({
         dataOut: '',
         dataLabel:'Link to clear',
         showRaw: false,
+        useApiFetch: false,
         urlPattern: new RegExp('(http||https):\/\/[0-9a-zA-Z]*.'),
         res:{
             original:'',
@@ -21,8 +22,16 @@ let app = new Vue({
             if(this.urlPattern.test(val)){
                 if(get){clearTimeout(get)}
                 get = setTimeout(() => {
-                    console.warn("fetching");
-                    this.clearURL(val);
+                    if(this.useApiFetch){
+                        console.warn("fetching");
+                        this.clearURL(val);
+                    }
+                    else {
+                        this.clearURLLocal(val).then(v => {
+                            this.dataOut = v;
+                            
+                        })
+                    }
                 }, 500);
             }
             else{
@@ -34,6 +43,21 @@ let app = new Vue({
         }
     },
     methods:{
+        clearURLLocal: async function(url){
+            url = new URL(url);
+    
+            if(url.pathname == '/l.php' && url.searchParams.get('u')){
+                let link = new URL(url.searchParams.get('u'));
+                link = `${link.origin}${link.pathname}`
+                return link
+            }
+            else if (url.searchParams.get('fbclid')){
+                return `${url.origin}${url.pathname}`
+            }
+            else{
+                return url;
+            }
+        },
         clearURL: async function(url){
             fetch(`/apis/cleanfb?u=${url}`, {
                 method: 'GET'
