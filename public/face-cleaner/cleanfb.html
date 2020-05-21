@@ -41,7 +41,7 @@
             <p v-if="dataIn"><b>Original url:</b> <a target="blank" v-bind:href="dataIn">{{dataInCut}}</a></p>
             <p v-if="dataOut"><b>Cleaned url:</b> <a target="blank" v-bind:href="dataOut">{{dataOut}}</a></p>
 
-            <button v-on:click="toOgTags()" >get OG tags from url</button> <br>
+            <button v-if="dataOut" v-on:click="toOgTags()" >get OG tags from url</button> <br>
             <button v-on:click="showRaw = !showRaw" v-if='false'>How it works</button> <br>
             <p raw v-if="showRaw && false">
                 This code can be used in browser devTools console <br><br>
