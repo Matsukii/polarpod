@@ -58,6 +58,9 @@ let app = new Vue({
                 return url;
             }
         },
+        toOgTags: function(){
+            window.location.href = `/ogtags?url=${encodeURIComponent(app.dataOut)}`
+        },
         clearURL: async function(url){
             fetch(`/apis/cleanfb?u=${url}`, {
                 method: 'GET'
