@@ -34,7 +34,7 @@
             <h2><a>Discovered:</a></h2>
             <div id="responsed">
                 <p v-if="dataIn"><b>Your url:</b> <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
-                <p v-if="res.url != ''"><b>URL:</b> {{res.url}}</p>
+                <p v-if="res.url != ''"><b>URL:</b> <a v-bind:href="res.url">{{res.url}}</a></p>
                 <p v-if="res.name"><b>name:</b> {{res.name}}</p>
                 <p v-if="res.desc"><b>Description:</b> {{res.desc}}</p>
                 <p v-if="res.title"><b>Title:</b> {{res.title}}</p>
