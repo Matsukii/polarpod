@@ -45,12 +45,13 @@ response:
 ## Og tag getter
 
 ``` http
-https://polarpod.herokuapp.com/apis/ogtags?u=[URL]
+https://polarpod.herokuapp.com/apis/ogtags?u=[URL]&enc=[true|false]
 ```
 
 parameters:
 
 * u: url
+* enc: (optional) if the url is encoded or not. flag not mandatory even if is encoded
 
 response:
 
@@ -94,13 +95,13 @@ https://polarpod.herokuapp.com/apis/hash/raw/sha256?d=test
 ## SVG QR Code generator
 
 ```http
-https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
+https://polarpod.herokuapp.com/apis/qr?u=[URL]&d=[true|false]&w=[width]&c=[color]&bg=[background]
 ```
 
 parameters:
 
 * u: data
-* d: dark/light [true/false] (if true generates a lighet qr)
+* d: dark/light [true|false] (if true generates a lighet qr)
 * w: width
 * c: HEX color **(without the #)** _default colors: for dark themes=#CCCCCC and light=#222222_
 * bg: background color in HEX **(without the #)** _default is transparent_
@@ -117,7 +118,7 @@ _same as above just add /file, the code will be saved and avaliable at ... .com/
 **this is for a specific use case that i needed**
 
 ```http
-https://polarpod.herokuapp.com/apis/qr/file?u=[URL]&d=[true]/[false]&w=[width]&c=[color]&bg=[background]
+https://polarpod.herokuapp.com/apis/qr/file?u=[URL]&d=[true|false]&w=[width]&c=[color]&bg=[background]
 ```
 
 ## Video URL parser

@@ -75,6 +75,13 @@ module.exports = (app, dir) => {
         if(!url){ return res.status(400).send('No params sended')}
         // if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
+        //* decode url, recomended but not necessary at most cases
+        //* and, the enc flag isn't mandatory, it should work without
+        //* this is just a redundant thing :)
+        if(req.query.enc){
+            url = decodeURIComponent(url)
+        }
+
         ogs({'url': url, ...conf.og.cfg}, (e, ret) => {
             let img;
             let tags = ret.data;
@@ -96,7 +103,7 @@ module.exports = (app, dir) => {
                     type    : tags.ogType || '',
                     url     : tags.ogUrl  || ret.requestUrl || '',
                     img     : img,
-                    success : true
+                    success : true,
                 });
 
             }
