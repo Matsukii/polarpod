@@ -17,7 +17,7 @@ module.exports = (params, warns, raw) => {
             algorithm: alg,
             hash: '',
             warning: warning,
-            date: new Date().toGMTString()
+            date: Date.now()
         }
     }
 
@@ -29,7 +29,7 @@ module.exports = (params, warns, raw) => {
         success: true,
         algorithm: alg,
         original: dat,
-        date: new Date().toGMTString()
+        date: Date.now()
     }
 
 
