@@ -82,32 +82,33 @@ module.exports = (app, dir) => {
             url = decodeURIComponent(url)
         }
 
-        ogs({'url': url, ...conf.og.cfg}, (e, ret) => {
+        ogs({'url': url, ...conf.og.cfg}, (e, tags) => {
             let img;
-            let tags = ret.data;
+
 
             if(tags != undefined && !e){
 
-                if(tags.ogImage.url != undefined || tags.ogImage[0] != undefined){
+                if(tags.ogImage != undefined && (tags.ogImage.url != undefined || tags.ogImage[0] != undefined)){
                     if(tags.ogImage[0] != undefined){
                         tags.ogImage[0].url != undefined ? img = tags.ogImage[0].url : null
                     }
                     else{img = tags.ogImage.url}
                 }
                 else{img = ''}
+
                 
-                return res.status(200).send({
+                return res.status(200).json({
                     name    : tags.ogSiteName || '',
                     title   : tags.ogTitle || '',
                     desc    : tags.ogDescription || '',
                     type    : tags.ogType || '',
-                    url     : tags.ogUrl  || ret.requestUrl || '',
+                    url     : tags.ogUrl  || tags.requestUrl || '',
                     img     : img,
-                    success : true,
+                    success : tags.success,
                 });
 
             }
-            else{return res.status(404).send({...resMsgs.og.defaultRes, success:false})}
+            else{return res.status(404).json({...resMsgs.og.defaultRes, success:false})}
         })
     });
 
