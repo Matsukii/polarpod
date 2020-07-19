@@ -34,34 +34,40 @@ module.exports = (app, dir) => {
     // clean facebook url
     app.get('/cleanfb', (req, res) => res.status(200).sendFile(`${dir}/public/face-cleaner/cleanfb.html`))
     
-    //* clean facebook url api
-    app.get('/apis/cleanfb/:redir', (req, res) => {
-        let url = req.query.u;
-        if(!url){return res.status(400).send('No params sended')}
+    // clean facebook url api
+    app.get('/apis/cleanfb', (req, res) => {
+        if(!req.query.u) return res.status(400).send("No params sended, please send url: .../cleanfb?u=[url]")
         try {
             return res.status(200).json({
-                original: url,
-                clean: fbCleanLink(url),
+                original: req.query.u,
+                clean: fbCleanLink(req.query.u),
                 timestamp: Date.now(),
                 success: true
             });
-            if(req.params.redir){
-                res.redirect(fbCleanLink(url))
-            }
-            else{
-                return res.status(200).json({
-                    original: url,
-                    clean: fbCleanLink(url),
-                    timestamp: Date.now(),
-                    success: true
-                });
-            }
+        } catch (e) {
+            return res.status(500).send({
+                original: req.query.u,
+                clean: 'error',
+                timestamp: Date.now(),
+                success: false,
+                error: e
+            })
+        }
+    })
+
+    //* clean facebook url api with redirect
+    // ! this may not work sometimes
+    app.get('/apis/cleanfb/redirect', (req, res) => {
+        if(!req.query.u){return res.status(400).send('No params sended, please send url: .../cleanfb?u=[url]')}
+        try {
+            res.redirect(fbCleanLink(req.query.u))
         } catch (e) {
             return res.status(500).send({
                 original: url,
-                clean: '',
+                clean: fbCleanLink(req.query.u),
                 timestamp: Date.now(),
-                success: false
+                success: false,
+                error: 'error - cant redirect'
             })
         }
     });
@@ -72,7 +78,7 @@ module.exports = (app, dir) => {
      */
     app.get("/apis/ogtags", async(req, res) => {
         let url = req.query.u;
-        if(!url){ return res.status(400).send('No params sended')}
+        if(!url){ return res.status(400).send('No params sended, please send url: .../ogtags?u=[url]')}
         // if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
         //* decode url, recomended but not necessary at most cases
@@ -119,7 +125,7 @@ module.exports = (app, dir) => {
      */
     app.get('/apis/op', (req, res) => {
         let url = req.query.u;
-        if(!url){ return res.status(400).send('No params sended')}
+        if(!url){ return res.status(400).send('No params sended, please send url: .../op?u=[url]')}
         // if(!validUrl.isUri(url)){ return res.status(406).send('Not a URL')}
 
         ops.fetch(url, function(err, meta){
@@ -192,7 +198,7 @@ module.exports = (app, dir) => {
         }
 
         // if(!validUrl.isUri(params.url)){ return res.status(406).send('Not a URL')}
-        if(params.url == undefined){ return res.status(400).send('no URL informed')}
+        if(params.url == undefined){ return res.status(400).send('no URL informed, please send url: .../meta?u=[url]')}
         else{
             vidMeta(params).then(r => {
                 try {

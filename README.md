@@ -30,8 +30,18 @@ The name came from "Polaris", "Escape-pod" and a a bit of 'south/north pole sign
 
 Extract original url from facebook links before redirect (any click redrects to facebook(dot)com/l.php, this extract)
 
+### Page
+```http
+https://polarpod.herokuapp.com/cleanfb?url=[URL]
+```
+
+### API
 ```http
 https://polarpod.herokuapp.com/apis/cleanfb?u=[URL]
+```
+OR with redirect after extract original url
+```http
+https://polarpod.herokuapp.com/apis/cleanfb/redirect?u=[URL]
 ```
 
 parameters:
@@ -44,6 +54,13 @@ response:
 
 ## Og tag getter
 
+### Page
+``` http
+https://polarpod.herokuapp.com/ogtags?url=[URL]
+```
+
+
+### API
 ``` http
 https://polarpod.herokuapp.com/apis/ogtags?u=[URL]&enc=[true|false]
 ```
@@ -123,6 +140,12 @@ https://polarpod.herokuapp.com/apis/qr/file?u=[URL]&d=[true|false]&w=[width]&c=[
 
 ## Video URL parser
 
+### Page
+``` http
+http://polarpod.herokuapp.com/video/meta?url=[URL]
+```
+
+### API
 ``` http
 http://polarpod.herokuapp.com/apis/video/meta?u=[URL]
 ```

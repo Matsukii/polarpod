@@ -22,15 +22,17 @@
 <!-- konnichiwa sekai -->
 <body class="dark" link="#03A9F4" vlink="#03A9F4">
         <h1>Open graph</h1>
+        <h2>API link: <a href="/apis/ogtags?u=">https://polarpod.herokuapp.com/apis/ogtags?u=[url]</a></h2>
+
         <h3>Get Open Graph (og) tags from a website</h3>
         <br>
         <br>
         <div id="polar">
-            <label for="dataIn" id="dataIn" v-if="dataIn.length > 0">{{dataLabel}}</label>
-            <input type="text" class="inputs" v-model="dataIn" placeholder="Any URL">
-    
+            <label for="dataIn" id="dataIn" v-if="dataIn.length > 0 || true">{{dataLabel}}</label>
+            <input type="text" class="inputs" v-model="dataIn" placeholder="https://example.com">
+            
             <br>
-    
+            
             <h2><a>Discovered:</a></h2>
             <div id="responsed">
                 <p v-if="dataIn"><b>Your url:</b> <a target="blank" v-bind:href="dataIn">{{dataIn}}</a></p>
@@ -41,7 +43,7 @@
                 <p v-if="res.type"><b>Type:</b> {{res.type}}</p>
                 <!-- <p v-if="!res"><b warn>Nothing founded</b></p> -->
 
-                <button v-on:click="showRaw = !showRaw">Show raw response</button> <br>
+                <button v-on:click="showRaw = !showRaw">Show raw response (JSON)</button> <br>
                 <p raw v-if="showRaw">{{res}}</p>
 
                 <a target="blank" v-bind:href="res.img">

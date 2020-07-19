@@ -6,7 +6,7 @@ let app = new Vue({
         dataIn: '',
         dataLabel: 'Any URL',
         showRaw: false,
-        urlPattern: new RegExp('(http||https):\/\/[0-9a-zA-Z]*.'),
+        urlPattern: new RegExp('(http|https):\/\/[0-9a-zA-Z]*.'),
         res:{
             name:"",
             title:"",
@@ -20,7 +20,9 @@ let app = new Vue({
     created(){
         if(window.location.search){
             setTimeout(()=>{
-                this.getOgs(new URL(window.location.href).searchParams.get('url'))
+                let url = new URL(window.location.href).searchParams.get('url');
+                this.getOgs(url)
+                this.dataIn = url
             }, 100);
             
         }

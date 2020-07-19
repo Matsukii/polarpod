@@ -17,6 +17,16 @@ let app = new Vue({
             timestamp: Date.now(),
         }
     },
+    created(){
+        if(window.location.search){
+            setTimeout(()=>{
+                let url = new URL(window.location.href).searchParams.get('url');
+                this.clearURLLocal(url)
+                this.dataIn = url
+            }, 100);
+            
+        }
+    },
     watch:{
         dataIn(val){
             if(this.urlPattern.test(val)){
