@@ -7,6 +7,10 @@ Polarpod is a set of useful APIs for data extraction and processing, with a litt
 (caution, the next part may contain THE100 spoilers!) <br>
 The name came from "Polaris", "Escape-pod" and a a bit of 'south/north pole signs', Polaris is a space station from THE100 series.
 
+## We also have a chrome extension (in development)!!
+### Check it out: [Polarpod-extension](https://github.com/matsukii/polarpod-extension)
+
+
 ## this API uses
 
 * open-graph-crapper

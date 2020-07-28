@@ -222,7 +222,6 @@ module.exports = (app, dir) => {
     })
 
 
-
     /**
      * 
      * @description get video thumbnail (is part of .../video/meta but returns only the image(s))
